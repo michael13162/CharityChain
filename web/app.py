@@ -1,9 +1,9 @@
-#!/usr/bin/python3h
+#!/usr/bin/python3
 
 from flask import Flask
 from flask import request
 from flask import jsonify
-import blockchain
+#import blockchain
 
 app = Flask(__name__)
 

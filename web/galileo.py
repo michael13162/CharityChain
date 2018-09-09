@@ -17,7 +17,8 @@ def trans_id():
 def get_trans_history(account_id):
 	data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
 			'accountNo': account_id, 'startDate': '2018-09-08', 'endDate': '2020-05-20'}
-	r = requests.post(url + 'getTransHistory', data=data, cert='galileo148.pem', headers=headers)
+	r = requests.post(url + 'getAllTransHistory', data=data, cert='galileo148.pem', headers=headers)
+	print('transaction history: ' + r.text)
 	json_response = r.json()
 
 	trans_history = {}
@@ -35,23 +36,34 @@ def get_trans_history(account_id):
 	return json_data
 
 def test():
-	id1 = create_account('grrrrr')
-	id2 = create_account('mooooboooo')
+	id1 = create_account('abbbb')
+	id2 = create_account('acccc')
 	print(id1)
 	print(id2)
 
 	print(get_balance(id1))
 
-
-	create_transaction(id1, id2, 10.00, 'lol')
+	create_transaction(id1, id2, 10.00, 'why')
 
 	get_trans_history(id1)
+	get_trans_history(id2)
 
 def create_transaction(sender, recipient, amount, description):
-	data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
-				   'accountNo': sender, 'amount': amount, 'transferToAccountNo': recipient, 'message': description}
-	r = requests.post(url + 'createAccountTransfer', data = data, cert='galileo148.pem', headers=headers)
-	print(r.text)
+	# data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
+	# 			   'accountNo': sender, 'amount': amount, 'transferToAccountNo': recipient, 'message': description}
+	# print(data)
+	# r = requests.post(url + 'createAccountTransfer', data = data, cert='galileo148.pem', headers=headers)
+	# print(r.text)
+
+	data_adj = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': 988976787,
+	 			   'accountNo': sender, 'amount': amount, 'type': 'F', 'debitCreditIndicator': 'D'}
+	r_adj = requests.post(url + 'createAdjustment', data = data_adj, cert='galileo148.pem', headers=headers)
+	print("deduction: " + r_adj.text)
+
+	data_cred = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
+	            	   'accountNo': recipient, 'amount': amount, 'type': 'RL', 'description': description}
+	r_cred = requests.post(url + 'createPayment', data = data_cred, cert='galileo148.pem', headers=headers)
+	print('credit: ' + r_cred.text)
 
 def create_account(name):
 	data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
@@ -65,7 +77,7 @@ def get_balance(account_id):
 	data = {'apiLogin': api_login, 'apiTransKey': api_transKey, 'providerId': provider_id, 'transactionId': trans_id(),
 			'accountNo': account_id}
 	r = requests.post(url + 'getBalance', data=data, cert='galileo148.pem', headers=headers)
-	return r.json()['response']['response_data']['balance']
+	return r.json()['response_data']['balance']
 
-# if __name__ == '__main__':
-# 	test()
+if __name__ == '__main__':
+	test()

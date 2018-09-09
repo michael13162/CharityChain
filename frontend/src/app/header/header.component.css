@@ -1,0 +1,37 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,600,400);
+
+* {
+    font-family: Raleway;
+}
+
+:host {
+    position: fixed;
+    background-color: #6D929B;
+    height: 75px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-size: 18px;
+}
+
+.left-side {
+    display: flex;
+    margin-left: 10px;
+}
+
+.right-side {
+    display: flex;
+    margin-right: 10px;
+}
+
+.action-div {
+    color: #E8D0A9;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.action-div:hover {
+    color: #B7AFA3;
+}

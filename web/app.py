@@ -27,11 +27,21 @@ def donate():
     ein = donate_info['ein']
     amount = donate_info['amount']
     description = donate_info['description']
-    
+
     if ein_to_account_id(ein) is None:
         return
 
     galileo.create_transaction(username_to_account_id(username), ein_to_account_id(ein), amount, description)
+
+    '''
+    query = 'INSERT INTO trans(username, ein, amount, description) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
+        username,
+        ein,
+        amount,
+        description
+    )
+    insert_db(query)
+    '''
 
 @app.route('/charity', methods=['POST'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
@@ -41,6 +51,9 @@ def charity():
 
     ein = charity_info['ein']
 
+    charity_info = charity_navigator.get_rating_info(ein)
+    mission_statement, tag_line = get_charity_statements(ein)
+
     if ein_to_account_id(ein) is not None:
         trans_history = galileo.get_trans_history(ein_to_account_id(ein))
         balance = galileo.get_balance(ein_to_account_id(ein))
@@ -48,9 +61,26 @@ def charity():
         trans_history = 'No transaction history'
         balance = 'Not registered'
 
-    charity_info = charity_navigator.get_rating_info(ein)
-    mission_statement, tag_line = get_charity_statements(ein)
-    
+    '''
+    query = 'SELECT * FROM trans WHERE trans.ein=\'%s\'' % (
+        ein
+    )
+    rows = query_db(query)
+    if len(rows) == 0:
+        js['trans_history'] = {}
+    else:
+        js['trans_history'] = rows
+
+    query = 'SELECT SUM(trans.amount) AS balance FROM trans WHERE trans.ein=\'%s\'' % (
+        ein
+    )
+    rows = query_db(query)
+    if len(rows) == 0:
+        js['balance'] = 0
+    else:
+        js['balance'] = rows[0]['balance']
+    '''
+
     js = {
         'trans_history': trans_history,
         'balance': balance,
@@ -63,7 +93,7 @@ def charity():
 @app.route('/charities', methods=['GET'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def charities():
-    query = 'SELECT charity.ein, charity.tag_line, charity.charity_name, charity.rating FROM charity ORDER BY rating DESC LIMIT 1000' # TODO project out stuff?
+    query = 'SELECT charity.ein, charity.tag_line, charity.charity_name, charity.rating FROM charity ORDER BY rating DESC LIMIT 1000'
 
     rows = query_db(query)
 
@@ -171,6 +201,17 @@ def get_user_data(username):
 
     #js['balance'] = blockchain.getBalance(user['username'])
     js['balance'] = galileo.get_balance(username_to_account_id(user['username']))
+
+    '''
+    query = 'SELECT SUM(trans.amount) AS balance FROM trans WHERE trans.username=\'%s\'' % (
+        username
+    )
+    rows = query_db(query)
+    if len(rows) == 0:
+        js['balance'] = 0
+    else:
+        js['balance'] = rows[0]['balance']
+    '''
     
     print(js)
     return js

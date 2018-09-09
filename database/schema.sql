@@ -13,3 +13,10 @@ CREATE TABLE charity (
   mission_statement TEXT NOT NULL,
   rating INTEGER NOT NULL
 );
+
+CREATE TABLE trans (
+  username TEXT NOT NULL,
+  ein TEXT NOT NULL,
+  amount REAL NOT NULL,
+  description TEXT NOT NULL
+);

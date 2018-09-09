@@ -47,11 +47,6 @@ def create_transaction(sender, recipient, amount, description):
 				   'accountNo': sender, 'amount': amount, 'transferToAccountNo': recipient, 'message': description}
 	r = requests.post(url + 'createAccountTransfer', data = data, cert='galileo148.pem')
 
-	# adds amount to recipient's account. Type is example value ("configurable per client")
-	add_data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
-			'accountNo': recipient, 'amount': amount, 'type': 2, 'description': description}
-	r = requests.post(url + 'createPayment', data=add_data, cert='galileo148.pem')
-
 def create_account(name):
 	data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
 			   'prodId': product_id, 'id': name}

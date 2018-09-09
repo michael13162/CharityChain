@@ -27,7 +27,7 @@ export class CreateAccountComponent {
 
   register() {
     if (this.password === this.confirmPassword) {
-      this.httpService.register(this.username, this.password, true, this.charity ? this.ein : "").then(() => {
+      this.httpService.register(this.username, this.password, this.charity, this.charity ? this.ein : "").then(() => {
         if (this.userService.isCharity()) {
           this.navigationService.navigateTo(AppScreen.Profile);
         } else {

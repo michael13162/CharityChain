@@ -10,6 +10,7 @@ ethereum-keys==0.1.0a7
 ethereum-tester==0.1.0b2
 ethereum-utils==0.6.0
 Flask==1.0.2
+Flask-Cors=3.0.6
 idna==2.7
 itsdangerous==0.24
 Jinja2==2.10

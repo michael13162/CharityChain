@@ -16,18 +16,85 @@ app = Flask(__name__)
 def info():
     return "It's running!"
 
+@app.route('/donate', methods=['POST'])
+def donate():
+    donate_info = request.get_json()
+
+    username = donate_info['username']
+    amount = donate_info['amount']
+    ein = donate_info['ein']
+    description = donate_info['description']
+
+    galileo.make_transaction(username, ein, amount, description)
+    blockchain.processTransaction(username, ein, amount)
+
+@app.route('/charity', methods=['POST'])
+def charity():
+    charity_info = request.get_json()
+
+    ein = charity_info['ein']
+
+    js = galileo.get_transactions(ein)
+    js['charity_navigator'] = charity_navigator.get_rating(ein)
+
+    return Response(json.dumps(js), mimetype='application/json')
+
+@app.route('/charities', methods=['POST'])
+def charities():
+    search_string = request.get_json()['search_string']
+    query = 'SELECT * FROM charity WHERE charity.charityName LIKE \'%%s%\' ORDER BY charity.score DESC' % (
+        search_string
+    )
+
+    rows = query_db(query)
+
+    js = {'charities': []} 
+    for row in rows:
+        charity = {
+            'ein': row['ein'],
+            'charity_name': row['charity_name'],
+            'score': row['score']
+        }
+
+        js['charities'].append(charity)
+
+    return Response(json.dumps(js), mimetype='application/json')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    login_info = request.get_json()
+    print(login_info)
+
+    username = login_info['username']
+    password = login_info['password']
+
+    js = get_user_data(username)
+    return Response(json.dumps(js), mimetype='application/json')
+
 @app.route('/register', methods=['POST'])
 def register():
     register_info = request.get_json()
     print(register_info)
 
-    query = 'INSERT INTO users(username, password) values(\'%s\', \'%s\')' % (
-        register_info['username'],
-        register_info['password']
+    username = register_info['username']
+    password = register_info['password']
+
+    is_charity = register_info['is_charity']
+    if is_charity:
+        ein = register_info['ein']
+    else:
+        ein = 'not_applicable'
+
+    query = 'INSERT INTO users(username, password, is_charity, ein) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
+        username,
+        password,
+        is_charity,
+        ein
     )
     insert_db(query)
 
-    js = get_user_data(register_info['username'])
+    js = get_user_data(username)
     return Response(json.dumps(js), mimetype='application/json')
 
 def get_user_data(username):
@@ -44,10 +111,14 @@ def get_user_data(username):
     print(user)
 
     js = {
-        'username' : user['username'],
-        'password' : user['password'],
-        'balance' : blockchain.getBalance(user['username'])
-     }
+        'username': user['username'],
+        'password': user['password'],
+        'is_charity': user['is_charity'],
+        'ein': user['ein'],
+    }
+    if user['is_charity'] == 1:
+        js['balance'] = blockchain.getBalance(user['username'])
+
     return js
 
 def insert_db(query):

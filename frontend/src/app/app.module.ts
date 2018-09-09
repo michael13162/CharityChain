@@ -14,6 +14,7 @@ import { LoginScreenComponent } from './loginscreen/loginscreen.component';
 import { CreateAccountComponent } from './createaccountscreen/createaccount.component';
 import { SearchScreenComponent } from './searchscreen/searchscreen.component';
 import { ProfileScreenComponent } from './profilescreen/profilescreen.component';
+import { ProfileWellComponent } from './profilewell/profilewell.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProfileScreenComponent } from './profilescreen/profilescreen.component'
     HomeScreenComponent,
     LoginScreenComponent,
     ProfileScreenComponent,
+    ProfileWellComponent,
     SearchScreenComponent,
   ],
   imports: [

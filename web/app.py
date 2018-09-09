@@ -10,6 +10,7 @@ import sqlite3
 import random
 import blockchain
 import galileo
+import charity_navigator
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -20,11 +21,15 @@ cors = CORS(app, resources={r"/donate": {"origins": "http://localhost:4200"}, r"
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def donate():
     donate_info = request.get_json()
+    print(donate_info)
 
     username = donate_info['username']
     ein = donate_info['ein']
     amount = donate_info['amount']
     description = donate_info['description']
+    
+    if ein_to_account_id(ein) is None:
+        return
 
     galileo.create_transaction(username_to_account_id(username), ein_to_account_id(ein), amount, description)
 
@@ -32,18 +37,33 @@ def donate():
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def charity():
     charity_info = request.get_json()
+    print(charity_info)
 
     ein = charity_info['ein']
 
-    js = galileo.get_transactions(ein_to_account_id(ein))
-    js['charity_navigator'] = charity_navigator.get_rating(ein)
+    if ein_to_account_id(ein) is not None:
+        trans_history = galileo.get_trans_history(ein_to_account_id(ein))
+        balance = galileo.get_balance(ein_to_account_id(ein))
+    else:
+        trans_history = 'No transaction history'
+        balance = 'Not registered'
 
+    charity_info = charity_navigator.get_rating_info(ein)
+    mission_statement, tag_line = get_charity_statements(ein)
+    
+    js = {
+        'trans_history': trans_history,
+        'balance': balance,
+        'charity_info': charity_info,
+        'mission_statement': mission_statement,
+        'tag_line': tag_line
+    }
     return Response(json.dumps(js), mimetype='application/json')
 
 @app.route('/charities', methods=['GET'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def charities():
-    query = 'SELECT * FROM charity ORDER BY rating DESC'
+    query = 'SELECT charity.ein, charity.tag_line, charity.charity_name, charity.rating FROM charity ORDER BY rating DESC LIMIT 1000' # TODO project out stuff?
 
     rows = query_db(query)
 
@@ -82,7 +102,7 @@ def register():
     password = register_info['password']
 
     account_id = galileo.create_account(username)
-
+    
     is_charity = register_info['is_charity']
     if is_charity:
         ein = register_info['ein']
@@ -101,13 +121,23 @@ def register():
     js = get_user_data(username)
     return Response(json.dumps(js), mimetype='application/json')
 
+def get_charity_statements(ein):
+    query = 'SELECT charity.mission_statement, charity.tag_line FROM charity WHERE charity.ein=\'%s\'' % (
+        ein
+    )
+
+    rows = query_db(query)
+
+    return rows[0]['mission_statement'], rows[0]['tag_line']
+
 def username_to_account_id(username):
     query = 'SELECT user.account_id FROM user WHERE user.username=\'%s\'' % (
         username
     )
-
+    
     rows = query_db(query)
-    if len(rows) != 1:
+    
+    if len(rows) == 0:
         return None
 
     return rows[0]['account_id']
@@ -118,7 +148,8 @@ def ein_to_account_id(ein):
     )
 
     rows = query_db(query)
-    if len(rows) != 1:
+    
+    if len(rows) == 0:
         return None
 
     return rows[0]['account_id']
@@ -129,12 +160,7 @@ def get_user_data(username):
     )
 
     rows = query_db(query)
-    if len(rows) != 1:
-        return None
-
     user = rows[0]
-
-    print(user)
 
     js = {
         'username': user['username'],
@@ -142,10 +168,11 @@ def get_user_data(username):
         'is_charity': user['is_charity'],
         'ein': user['ein'],
     }
-    if user['is_charity'] == 1:
-        #js['balance'] = blockchain.getBalance(user['username'])
-        js['balance'] = 0
 
+    #js['balance'] = blockchain.getBalance(user['username'])
+    js['balance'] = galileo.get_balance(username_to_account_id(user['username']))
+    
+    print(js)
     return js
 
 def insert_db(query):

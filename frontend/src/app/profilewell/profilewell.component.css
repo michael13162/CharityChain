@@ -1,0 +1,136 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,600,400);
+
+* {
+    font-family: Raleway;
+}
+
+.profile-well {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    width: 800px;
+    margin: 100px auto 100px;
+    text-align: center;
+    border: 1px solid #6D929B;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-well.small-margin {
+    margin: 50px auto 100px;
+}
+
+.close-button {
+    margin-top: 8px;
+    margin-right: 8px;
+    align-self: flex-end;
+    width: 16px;
+    height: 16px;
+    background: url(../../assets/cancel-music.svg);
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+
+.organization-name {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #B7AFA3;
+    text-decoration: underline;
+}
+
+.rating-image {
+    margin-top: 10px;
+    height: 12px;
+    width: 60px;
+}
+
+.mission-statement {
+    font-size: 14px;
+    color: #B7AFA3;
+    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.performance-header {
+    text-align: center;
+    margin-top: 25px;
+    color: #B7AFA3;
+    font-size: 18px;
+}
+
+.performance-metric {
+    width: calc(100% - 20px);
+    font-size: 14px;
+    color: #B7AFA3;
+    display: flex;
+    margin: 10px 10px 0px 10px;
+    justify-content: space-between;
+}
+
+.test-well {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.test-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 30px);
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.icon-span {
+    margin-left: 10px;
+}
+
+.fail-icon {
+    width: 32px;
+    height: 32px;
+    background: url(../../assets/x-button.svg);
+    background-size: 32px 32px;
+}
+
+.pass-icon {
+    width: 32px;
+    height: 32px;
+    background: url(../../assets/checked.svg);
+    background-size: 32px 32px;
+}
+
+.passDiv {
+    display: flex;
+    flex: 1 1 0px;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.donate-button {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: orange;
+    border-radius: 10px;
+    width: 100px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.donate-button:hover {
+    background: lightsalmon;
+}
+
+.balance-div {
+    margin-bottom: 25px;
+}

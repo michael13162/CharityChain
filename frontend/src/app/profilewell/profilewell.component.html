@@ -1,0 +1,34 @@
+<div class="profile-well" [class.small-margin]="overlay">
+    <div *ngIf="overlay" class="close-button" (click)="overlayClosed.emit()"></div>
+    <a href="{{getOrganizationUrl()}}" target="_blank" class="organization-name">{{getOrganizationName()}}</a>
+    <img class="rating-image" [src]="getRatingImage()"><img>
+    <div class="mission-statement">{{getMissionStatement()}}</div>
+    <span class="performance-header">Performance Metrics</span>
+    <div class="performance-metric"><span class="performance-description">Administration Expense Ratio:</span><span class="performance-value">{{getAdministrationExpenseRatio()}}</span></div>
+    <div class="performance-metric"><span class="performance-description">Fundraising Efficiency:</span><span class="performance-value">{{getFundraisingEfficiency()}}</span></div>
+    <div class="performance-metric"><span class="performance-description">Liabilities to Assets Ratio:</span><span class="performance-value">{{getLiabilitiesToAssetsRatio()}}</span></div>
+    <div class="performance-metric"><span class="performance-description">Program Expenses Growth:</span><span class="performance-value">{{getProgramExpensesGrowth()}}</span></div>
+    <div class="performance-metric"><span class="performance-description">Program Expenses Ratio:</span><span class="performance-value">{{getProgramExpensesRatio()}}</span></div>
+    <div class="performance-metric"><span class="performance-description">Working Capital Ratio:</span><span class="performance-value">{{getWorkingCapitalRatio()}}</span></div>
+
+    <div class="test-well">
+        <div class="test-row">
+            <div class="passDiv"><div [class.pass-icon]="auditedFinancialStatus()" [class.fail-icon]="!auditedFinancialStatus()"></div><div class="icon-span">Audited Financial Status</div></div>
+            <div class="passDiv"><div [class.pass-icon]="boardListStatus()" [class.fail-icon]="!boardListStatus()"></div><div class="icon-span">Board List Status</div></div>
+            <div class="passDiv"><div [class.pass-icon]="boardMeetingMinutes()" [class.fail-icon]="!boardMeetingMinutes()"></div><div class="icon-span">Board Meeting Minutes</div></div>
+        </div>
+        <div class="test-row">
+            <div class="passDiv"><div [class.pass-icon]="ceoCompensationProcedure()" [class.fail-icon]="!ceoCompensationProcedure()"></div><div class="icon-span">CEO Compensation Procedure</div></div>
+            <div class="passDiv"><div [class.pass-icon]="compensatesBoard()" [class.fail-icon]="!compensatesBoard()"></div><div class="icon-span">Compensates Board</div></div>
+            <div class="passDiv"><div [class.pass-icon]="form990Status()" [class.fail-icon]="!form990Status()"></div><div class="icon-span">Form 990 Status</div></div>
+        </div>
+        <div class="test-row">
+            <div class="passDiv"><div [class.pass-icon]="independentAudit()" [class.fail-icon]="!independentAudit()"></div><div class="icon-span">Independent Audit</div></div>
+            <div class="passDiv"><div [class.pass-icon]="privacyStatus()" [class.fail-icon]="!privacyStatus()"></div><div class="icon-span">Privacy Status</div></div>
+            <div class="passDiv"><div [class.pass-icon]="reportsCEOAndSalary()" [class.fail-icon]="!reportsCEOAndSalary()"></div><div class="icon-span">Reports CEO and Salary</div></div>
+        </div>
+    </div>
+
+    <div *ngIf="overlay" class="donate-button" (click)="donateClicked.emit()">Donate</div>
+    <div *ngIf="!overlay" class="balance-div">Balance: {{getBalance()}} CCT</div>
+</div>

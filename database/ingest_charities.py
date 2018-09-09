@@ -63,13 +63,19 @@ for result in results:
     else:
         rating = '0'
 
-    print(ein + " " + tag_line + " " + charity_name + " " + rating)
+    if 'mission' in result and result['mission'] is not None:
+        mission_statement = result['mission']
+    else:
+        mission_statement = 'NOT FOUND'
 
-    query = 'INSERT INTO charity(ein, tag_line, charity_name, rating) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
+    print(ein + " " + tag_line + " " + charity_name + " " + rating + " " + mission_statement[0:10])
+
+    query = 'INSERT INTO charity(ein, tag_line, charity_name, rating, mission_statement) values(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\')' % (
         ein.replace('\'', '\'\''),
         tag_line.replace('\'', '\'\''),
         charity_name.replace('\'', '\'\''),
-        rating.replace('\'', '\'\'')
+        rating.replace('\'', '\'\''),
+        mission_statement.replace('\'', '\'\'')
     )
 
     insert_db(db, query)

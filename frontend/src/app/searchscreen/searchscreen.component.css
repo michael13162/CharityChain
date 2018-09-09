@@ -8,13 +8,16 @@
     display: flex;
     flex-direction: column;
     background: #F5FAFA;
+    margin-top: 75px;
     width: 100%;
+    height: calc(100% - 75px);
+    overflow: auto;
 }
 
 .search-div {
     width: calc(100% - 100px);
     margin: 50px;
-    margin-top: 100px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
 }
@@ -24,6 +27,7 @@
     background: #C1DAD6;
     height: 50px;
     padding-left: 15px;
+    margin-right: -32px;
     font-size: 24px;
     width: 100%;
     border: 1px solid #6D929B;
@@ -36,8 +40,8 @@
 }
 
 .search-icon {
-    position: absolute;
-    right: 60px;
+    position: relative;
+    right: 16px;
     width: 32px;
     height: 32px;
     background: url(../../assets/magnifier-tool.svg);
@@ -54,6 +58,7 @@
 }
 
 .search-headers {
+    flex: 0 0 auto;
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -62,7 +67,7 @@
 }
 
 .organization {
-    flex: 0 0 150px;
+    flex: 0 0 200px;
 }
 
 .tagline {
@@ -70,13 +75,37 @@
 }
 
 .rating {
-    flex: 0 0 100px;
+    flex: 0 0 200px;
+    display: flex;
 }
 
 .more-details {
-    flex: 0 0 100px;
+    flex: 0 0 150px;
 }
 
 .search-result {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    width: 100%;
     border-bottom: 1px solid #C1DAD6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.button {
+    color: #B7AFA3;
+    cursor: pointer;
+}
+
+.button:hover {
+    border-bottom: 1px solid #B7AFA3;
+}
+
+.star-icon {
+    width: 32px;
+    height: 32px;
+    background: url(../../assets/star.svg);
+    background-size: 32px 32px;
+    margin-right: 4px;
 }

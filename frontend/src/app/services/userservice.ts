@@ -39,6 +39,10 @@ export class UserService {
         }
     }
 
+    getEin() {
+        return this.ein;
+    }
+
     setSignInOutCallback(callback: () => void) {
         this.signInOutCallback = callback;
     }

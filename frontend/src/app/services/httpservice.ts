@@ -31,4 +31,9 @@ export class HttpService {
         const endpoint = this.baseUrl + "charities";
         return this.httpClient.get(endpoint, this.HTTP_OPTIONS).toPromise();
     }
+
+    getCharityInformation(ein: string): Promise<any> {
+        const endpoint = this.baseUrl + "charity";
+        return this.httpClient.post(endpoint, {ein: ein}, this.HTTP_OPTIONS).toPromise();
+    }
 }

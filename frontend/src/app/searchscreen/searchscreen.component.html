@@ -1,5 +1,5 @@
 <div class="search-div">
-    <input type="text" [(ngModel)]="searchText" placeholder="Search for Charities" class="search-well"/>
+    <input type="text" [ngModel]="searchText" (ngModelChange)="updateSearch($event)" placeholder="Search for Charities" class="search-well"/>
     <div class="search-icon"></div>
 </div>
 
@@ -10,10 +10,10 @@
         <div class="rating">Rating</div>
         <div class="more-details">More Details</div>
     </div>
-    <div class="search-result" *ngFor="let charity of charities">
-        <div class="organization">charity.charity_name</div>
-        <div class="tagline">charity.tag_line</div>
-        <div class="rating">charity.rating</div>
-        <div class="more-details">More Details</div>
+    <div *ngFor="let charity of filteredCharities" class="search-result">
+        <div class="organization">{{charity.charity_name}}</div>
+        <div class="tagline">{{charity.tag_line}}</div>
+        <div class="rating"><div *ngFor="let star of getStars(charity.rating)" class="star-icon"></div></div>
+        <div class="more-details" ><span class="button" (click)="openMoreDetails(charity)">More Details</span></div>
     </div>
 <div>

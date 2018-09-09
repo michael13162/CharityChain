@@ -43,14 +43,17 @@ def charity():
 
     if ein_to_account_id(ein) is not None:
         trans_history = galileo.get_trans_history(ein_to_account_id(ein))
+        balance = galileo.get_balance(ein_to_account_id(ein))
     else:
         trans_history = 'No transaction history'
+        balance = 'Not registered'
 
     charity_info = charity_navigator.get_rating_info(ein)
     mission_statement, tag_line = get_charity_statements(ein)
     
     js = {
         'trans_history': trans_history,
+        'balance': balance,
         'charity_info': charity_info,
         'mission_statement': mission_statement,
         'tag_line': tag_line

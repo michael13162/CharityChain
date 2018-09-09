@@ -1,4 +1,4 @@
-<div class="profile-well">
+<div class="profile-well" [class.small-margin]="overlay">
     <div *ngIf="overlay" class="close-button" (click)="overlayClosed.emit()"></div>
     <a href="{{getOrganizationUrl()}}" target="_blank" class="organization-name">{{getOrganizationName()}}</a>
     <img class="rating-image" [src]="getRatingImage()"><img>

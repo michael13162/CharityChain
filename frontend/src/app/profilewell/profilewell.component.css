@@ -9,12 +9,16 @@
     z-index: 1;
     background: #FFFFFF;
     width: 800px;
-    margin: 50px auto 100px;
+    margin: 100px auto 100px;
     text-align: center;
     border: 1px solid #6D929B;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.profile-well.small-margin {
+    margin: 50px auto 100px;
 }
 
 .close-button {

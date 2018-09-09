@@ -28,12 +28,13 @@ def donate():
     amount = donate_info['amount']
     description = donate_info['description']
 
+    '''
     if ein_to_account_id(ein) is None:
         return
 
     galileo.create_transaction(username_to_account_id(username), ein_to_account_id(ein), amount, description)
-
     '''
+
     query = 'INSERT INTO trans(username, ein, amount, description) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
         username,
         ein,
@@ -41,7 +42,6 @@ def donate():
         description
     )
     insert_db(query)
-    '''
 
 @app.route('/charity', methods=['POST'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
@@ -54,14 +54,15 @@ def charity():
     charity_info = charity_navigator.get_rating_info(ein)
     mission_statement, tag_line = get_charity_statements(ein)
 
+    '''
     if ein_to_account_id(ein) is not None:
         trans_history = galileo.get_trans_history(ein_to_account_id(ein))
         balance = galileo.get_balance(ein_to_account_id(ein))
     else:
         trans_history = 'No transaction history'
         balance = 'Not registered'
-
     '''
+
     query = 'SELECT * FROM trans WHERE trans.ein=\'%s\'' % (
         ein
     )
@@ -79,11 +80,10 @@ def charity():
         js['balance'] = 0
     else:
         js['balance'] = rows[0]['balance']
-    '''
 
     js = {
-        'trans_history': trans_history,
-        'balance': balance,
+        #'trans_history': trans_history,
+        #'balance': balance,
         'charity_info': charity_info,
         'mission_statement': mission_statement,
         'tag_line': tag_line
@@ -200,9 +200,10 @@ def get_user_data(username):
     }
 
     #js['balance'] = blockchain.getBalance(user['username'])
-    js['balance'] = galileo.get_balance(username_to_account_id(user['username']))
-
     '''
+    js['balance'] = galileo.get_balance(username_to_account_id(user['username']))
+    '''
+
     query = 'SELECT SUM(trans.amount) AS balance FROM trans WHERE trans.username=\'%s\'' % (
         username
     )
@@ -211,7 +212,6 @@ def get_user_data(username):
         js['balance'] = 0
     else:
         js['balance'] = rows[0]['balance']
-    '''
     
     print(js)
     return js

@@ -9,7 +9,7 @@
     z-index: 1;
     background: #FFFFFF;
     width: 800px;
-    margin: 175px auto 100px;
+    margin: 50px auto 100px;
     text-align: center;
     border: 1px solid #6D929B;
     display: flex;
@@ -17,11 +17,22 @@
     align-items: center;
 }
 
+.close-button {
+    margin-top: 8px;
+    margin-right: 8px;
+    align-self: flex-end;
+    width: 16px;
+    height: 16px;
+    background: url(../../assets/cancel-music.svg);
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+
 .organization-name {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 25px;
+    margin-top: 10px;
     font-size: 24px;
     cursor: pointer;
     color: #B7AFA3;
@@ -82,7 +93,7 @@
 .fail-icon {
     width: 32px;
     height: 32px;
-    background: url(../../assets/brightness.svg);
+    background: url(../../assets/x-button.svg);
     background-size: 32px 32px;
 }
 
@@ -101,15 +112,17 @@
     margin-top: 10px;
 }
 
-.footer {
-    display: flex;
-    margin-bottom: 25px;
+.donate-button {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: orange;
+    border-radius: 10px;
+    width: 100px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.button {
-
-}
-
-.close-button {
-
+.donate-button:hover {
+    background: lightsalmon;
 }

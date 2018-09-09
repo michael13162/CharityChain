@@ -1,4 +1,5 @@
 <div class="profile-well">
+    <div *ngIf="overlay" class="close-button" (click)="overlayClosed.emit()"></div>
     <a href="{{getOrganizationUrl()}}" target="_blank" class="organization-name">{{getOrganizationName()}}</a>
     <img class="rating-image" [src]="getRatingImage()"><img>
     <div class="mission-statement">{{getMissionStatement()}}</div>
@@ -28,8 +29,5 @@
         </div>
     </div>
 
-    <div class="footer" *ngIf="overlay">
-        <div class="button close-button" (click)="overlayClosed.emit()">Close</div>
-        <div class="button donate-button" (click)="donateClicked.emit()">Donate</div>
-    </div>
+    <div *ngIf="overlay" class="donate-button" (click)="donateClicked.emit()">Donate</div>
 </div>

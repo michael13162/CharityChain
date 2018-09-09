@@ -65,7 +65,7 @@ def get_balance(account_id):
     data = {'apiLogin': api_login, 'apiTransKey': api_transKey, 'providerId': provider_id, 'transactionId': trans_id(),
             'accountNo': account_id}
     r = requests.post(url + 'getBalance', data=data, cert='galileo148.pem', headers=headers)
-    return r.json()['response']['response_data']['balance']
+    return r.json()['response_data']['balance']
 
 # if __name__ == '__main__':
 #     test()

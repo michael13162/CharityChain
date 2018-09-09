@@ -27,6 +27,9 @@ def donate():
     ein = donate_info['ein']
     amount = donate_info['amount']
     description = donate_info['description']
+    
+    if ein_to_account_id(ein) is None:
+        return
 
     galileo.create_transaction(username_to_account_id(username), ein_to_account_id(ein), amount, description)
 
@@ -38,7 +41,11 @@ def charity():
 
     ein = charity_info['ein']
 
-    trans_history = galileo.get_trans_history(ein_to_account_id(ein))
+    if ein_to_account_id(ein) is not None:
+        trans_history = galileo.get_trans_history(ein_to_account_id(ein))
+    else:
+        trans_history = 'No transaction history'
+
     charity_info = charity_navigator.get_rating_info(ein)
     mission_statement, tag_line = get_charity_statements(ein)
     
@@ -92,7 +99,7 @@ def register():
     password = register_info['password']
 
     account_id = galileo.create_account(username)
-	
+    
     is_charity = register_info['is_charity']
     if is_charity:
         ein = register_info['ein']
@@ -124,8 +131,11 @@ def username_to_account_id(username):
     query = 'SELECT user.account_id FROM user WHERE user.username=\'%s\'' % (
         username
     )
-
+    
     rows = query_db(query)
+    
+    if len(rows) == 0:
+        return None
 
     return rows[0]['account_id']
 
@@ -135,6 +145,9 @@ def ein_to_account_id(ein):
     )
 
     rows = query_db(query)
+    
+    if len(rows) == 0:
+        return None
 
     return rows[0]['account_id']
 

@@ -9,6 +9,7 @@ import string
 import sqlite3
 import random
 import blockchain
+import galileo
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -88,7 +89,7 @@ def register():
     else:
         ein = 'not_applicable'
 
-    query = 'INSERT INTO user(username, password, account_id, is_charity, ein) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
+    query = 'INSERT INTO user(username, password, account_id, is_charity, ein) values(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\')' % (
         username,
         password,
         account_id,

@@ -11,7 +11,6 @@ product_id = 5094
 headers = {'response-content-type': 'json'}
 cert = 'galileo8.pem'
 
-
 # returns a string uuid for each transaction id
 def trans_id():
     return str(uuid.uuid4())
@@ -63,12 +62,13 @@ def create_transaction(sender, recipient, amount, description):
     # r = requests.post(url + 'createAccountTransfer', data = data, cert='galileo148.pem', headers=headers)
     # print(r.text)
 
+    # decrementing balance of sender
     data_adj = {'apiLogin': api_login, 'apiTransKey': api_transKey, 'providerId': provider_id,
-                'transactionId': 988976787,
-                'accountNo': sender, 'amount': amount, 'type': 'F', 'debitCreditIndicator': 'D'}
+                'transactionId': 988976787, 'accountNo': sender, 'amount': amount, 'type': 'F', 'debitCreditIndicator': 'D'}
     r_adj = requests.post(url + 'createAdjustment', data=data_adj, cert='galileo148.pem', headers=headers)
     print("deduction: " + r_adj.text)
 
+    # incrementing balance of receiver
     data_cred = {'apiLogin': api_login, 'apiTransKey': api_transKey, 'providerId': provider_id,
                  'transactionId': trans_id(),
                  'accountNo': recipient, 'amount': amount, 'type': 'RL', 'description': description}

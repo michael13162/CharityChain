@@ -127,4 +127,10 @@ export class ProfileWellComponent {
       return this.jsonProfile.charity_info.accountabilityRating.accountabilityTests.reportsCEOAndSalary == "Pass";
     }
   }
+
+  getBalance(): number {
+    if (this.jsonProfile) {
+      return this.jsonProfile.balance;
+    }
+  }
 }

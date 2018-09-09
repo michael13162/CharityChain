@@ -130,3 +130,7 @@
 .donate-button:hover {
     background: lightsalmon;
 }
+
+.balance-div {
+    margin-bottom: 25px;
+}

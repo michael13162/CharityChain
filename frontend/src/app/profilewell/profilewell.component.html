@@ -30,4 +30,5 @@
     </div>
 
     <div *ngIf="overlay" class="donate-button" (click)="donateClicked.emit()">Donate</div>
+    <div *ngIf="!overlay" class="balance-div">Balance: {{getBalance()}} CCT</div>
 </div>

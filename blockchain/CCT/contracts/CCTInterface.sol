@@ -3,7 +3,7 @@
 pragma solidity ^0.4.21;
 
 
-contract EIP20Interface {
+contract CCTInterface {
     /* This is a slight change to the ERC20 base standard.
     function totalSupply() constant returns (uint256 supply);
     is replaced with:

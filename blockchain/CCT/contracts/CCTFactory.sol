@@ -1,23 +1,23 @@
-import "./EIP20.sol";
+import "./CCT.sol";
 
 pragma solidity ^0.4.21;
 
 
-contract EIP20Factory {
+contract CCTFactory {
 
     mapping(address => address[]) public created;
-    mapping(address => bool) public isEIP20; //verify without having to do a bytecode check.
+    mapping(address => bool) public isCCT; //verify without having to do a bytecode check.
     bytes public EIP20ByteCode; // solhint-disable-line var-name-mixedcase
 
-    function EIP20Factory() public {
+    constructor() public {
         //upon creation of the factory, deploy a EIP20 (parameters are meaningless) and store the bytecode provably.
-        address verifiedToken = createEIP20(10000, "Verify Token", 3, "VTX");
+        address verifiedToken = createCCT(10000, "Verify Token", 3, "VTX");
         EIP20ByteCode = codeAt(verifiedToken);
     }
 
     //verifies if a contract that has been deployed is a Human Standard Token.
     //NOTE: This is a very expensive function, and should only be used in an eth_call. ~800k gas
-    function verifyEIP20(address _tokenContract) public view returns (bool) {
+    function verifyCCT(address _tokenContract) public view returns (bool) {
         bytes memory fetchedTokenByteCode = codeAt(_tokenContract);
 
         if (fetchedTokenByteCode.length != EIP20ByteCode.length) {
@@ -33,13 +33,13 @@ contract EIP20Factory {
         return true;
     }
 
-    function createEIP20(uint256 _initialAmount, string _name, uint8 _decimals, string _symbol)
+    function createCCT(uint256 _initialAmount, string _name, uint8 _decimals, string _symbol)
         public
     returns (address) {
 
-        EIP20 newToken = (new EIP20(_initialAmount, _name, _decimals, _symbol));
+        CCT newToken = (new CCT(_initialAmount, _name, _decimals, _symbol));
         created[msg.sender].push(address(newToken));
-        isEIP20[address(newToken)] = true;
+        isCCT[address(newToken)] = true;
         //the factory will own the created tokens. You must transfer them.
         newToken.transfer(msg.sender, _initialAmount);
         return address(newToken);

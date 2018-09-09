@@ -17,5 +17,5 @@ export class NavigationService {
 }
 
 export enum AppScreen {
-    Home, Login, CreateAccount
+    Home, Login, CreateAccount, Search, Profile
 }

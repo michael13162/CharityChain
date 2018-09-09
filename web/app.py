@@ -152,9 +152,9 @@ def get_user_data(username):
         'is_charity': user['is_charity'],
         'ein': user['ein'],
     }
-    if user['is_charity'] == 1:
-        #js['balance'] = blockchain.getBalance(user['username'])
-        js['balance'] = 0
+
+    #js['balance'] = blockchain.getBalance(user['username'])
+    js['balance'] = galileo.get_balance(username_to_account_id(user['username']))
     
     print(js)
     return js

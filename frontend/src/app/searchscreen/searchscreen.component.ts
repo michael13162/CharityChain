@@ -1,5 +1,6 @@
 import { Component, ChangeDetectorRef, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { HttpService } from '../services/httpservice';
+import { UserService } from '../services/userservice';
 
 @Component({
   selector: 'search-screen-component',
@@ -11,8 +12,14 @@ export class SearchScreenComponent implements OnInit {
   searchText: string = "";
   charities: any[];
   filteredCharities: any[];
+  showingDetails: boolean;
+  jsonProfile: any;
   
-  constructor(private cdr: ChangeDetectorRef, private httpService: HttpService) {
+  constructor(private cdr: ChangeDetectorRef, private httpService: HttpService, private userService: UserService) {
+  }
+
+  donateClicked() {
+    
   }
 
   ngOnInit(): void {
@@ -26,7 +33,14 @@ export class SearchScreenComponent implements OnInit {
   }
 
   openMoreDetails(charity: any) {
-    
+    this.showingDetails = true;
+    this.cdr.markForCheck();
+    this.httpService.getCharityInformation(charity.ein).then(
+      (value) => {
+        this.jsonProfile = value;
+        this.cdr.detectChanges();
+      }
+    );
   }
 
   updateSearch(searchText: string) {

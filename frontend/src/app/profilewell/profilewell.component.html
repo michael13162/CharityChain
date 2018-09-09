@@ -28,6 +28,11 @@
             <div class="passDiv"><div [class.pass-icon]="reportsCEOAndSalary()" [class.fail-icon]="!reportsCEOAndSalary()"></div><div class="icon-span">Reports CEO and Salary</div></div>
         </div>
     </div>
+	
+	<div *ngFor="let transaction of transactions" class="search-result">
+        <div class="transaction">{{transaction.ein}}</div>
+        <div class="amount">{{charity.amount}}</div>
+    </div>
 
     <div *ngIf="overlay" class="donate-button" (click)="donateClicked.emit()">Donate</div>
     <div *ngIf="!overlay" class="balance-div">Balance: {{getBalance()}} CCT</div>

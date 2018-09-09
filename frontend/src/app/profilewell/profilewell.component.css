@@ -134,3 +134,22 @@
 .balance-div {
     margin-bottom: 25px;
 }
+
+.search-result {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #C1DAD6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.amount {
+    flex: 0 0 200px;
+    display: flex;
+}
+
+.transaction {
+    flex: 0 0 200px;
+}

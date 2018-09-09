@@ -11,9 +11,20 @@ export class ProfileWellComponent {
   @Input() overlay: boolean;
   @Output() overlayClosed: EventEmitter<void> = new EventEmitter<void>();
   @Output() donateClicked: EventEmitter<void> = new EventEmitter<void>();
+  transactions: any[];
 
   constructor() {}
 
+  ngOnInit(): void {
+    this.httpService.getCharities().then(
+      (response) => {
+        this.transactions = response.trans_history;
+        this.updateSearch(this.searchText);
+        this.cdr.markForCheck();
+      }
+    );
+  }
+  
   getOrganizationName(): string {
     if (this.jsonProfile) {
       return this.jsonProfile.charity_info.referenceOrganization.charityName;

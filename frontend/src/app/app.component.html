@@ -2,4 +2,5 @@
 <ng-container [ngSwitch]="currentScreen">
   <home-screen-component *ngSwitchCase="AppScreen.Home"></home-screen-component>
   <login-screen-component *ngSwitchCase="AppScreen.Login"></login-screen-component>
+  <create-account-component *ngSwitchCase="AppScreen.CreateAccount"></create-account-component>
 </ng-container>

@@ -1,0 +1,187 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,600,400);
+
+* {
+    font-family: Raleway;
+}
+
+:host {
+    width: 100%;
+    background-color: #F5FAFA;
+}
+
+.form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 175px auto 100px;
+    padding: 45px;
+    text-align: center;
+    border: 1px solid #6D929B;
+}
+
+.form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #F5FAFA;
+    color: #E8D0A9;
+    width: 100%;
+    border: 1px solid #6D929B;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+::placeholder {
+    color: #E8D0A9;
+}
+
+.form button {
+    text-transform: uppercase;
+    background: #6D929B;
+    width: 100%;
+    padding: 15px;
+    color: #E8D0A9;
+    border: 0;
+    font-size: 14px;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+.form button:hover,.form button:active,.form button:focus {
+    background: #C1DAD6;
+}
+
+.form .message {
+    margin: 15px 0 0;
+    color: #E8D0A9;
+    font-size: 12px;
+}
+
+.form .message span {
+    color: #6D929B;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.account-type-selector {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.account-type-description {
+    flex: 1 1 0px;
+    text-align: left;
+}
+
+.account-type-container {
+    flex: 1 1 0px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.account-type-well {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.account-type-well.selected {
+    background: #C1DAD6;    
+}
+
+.account-type-well:hover {
+    background: #6D929B;
+}
+
+input.error {
+    border-color: red;
+    -webkit-animation: shake .5s linear;   
+}
+
+@-webkit-keyframes shake {
+    8%, 41% {
+        -webkit-transform: translateX(-10px);
+    }
+    25%, 58% {
+        -webkit-transform: translateX(10px);
+    }
+    75% {
+        -webkit-transform: translateX(-5px);
+    }
+    92% {
+        -webkit-transform: translateX(5px);
+    }
+    0%, 100% {
+        -webkit-transform: translateX(0);
+    }
+}
+
+#error-tooltip {
+    visibility: hidden;
+    width: 200px;
+    background-color: red;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin-left: -90px;
+}
+
+#error-tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent red transparent;
+}
+
+#error-tooltip.visible {
+    -webkit-animation: fadein 1s linear;
+    visibility: visible;
+}
+
+#error-tooltip.invisible {
+    -webkit-animation: fadeout 1s linear;
+    visibility: hidden;
+}
+
+@-webkit-keyframes fadeout {
+    0% {opacity:1; visibility: visible;}
+    99% {opacity:0;}
+    100% {opacity:0; visibility: hidden;}
+}
+
+@-webkit-keyframes fadein {
+    0% {opacity:0; visibility: visible;}
+    100% {opacity:1;}
+}
+
+.donor-icon {
+    width: 30px;
+    height: 30px;
+    background: url(../../assets/pay-per-click.svg);
+    background-size: 30px 30px;
+    margin-right: 5px;
+}
+
+.charity-icon {
+    width: 30px;
+    height: 30px;
+    background: url(../../assets/care.svg);
+    background-size: 30px 30px;
+    margin-right: 5px;
+}

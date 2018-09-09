@@ -1,0 +1,30 @@
+<div class="register-container">
+    <div class="form">
+        <form class="register-form">
+            <input type="text" placeholder="username" [(ngModel)]="username"  name="username"/>
+            <input type="password" placeholder="password" [(ngModel)]="password" name="password"/>
+            <input type="password" placeholder="confirm password" [(ngModel)]="confirmPassword" name="confirmPassword" [class.error]="passwordsDontMatch"/>
+            <span id="error-tooltip" [class.visible]="passwordsDontMatch" [class.invisible]="timeElapsed">Passwords must match!</span>
+            <div class="account-type-selector">
+                <span class="account-type-description">I want to be a:</span>
+                <div class="account-type-container">
+                    <div class="spacer"></div>
+                    <div class="account-type-well" [class.selected]="!charity" (click)="charity = false">
+                        <div class="donor-icon"></div>
+                        <span>Donor</span>
+                    </div>
+                </div>
+                <div class="account-type-container">
+                    <div class="spacer"></div>
+                    <div class="account-type-well" [class.selected]="charity" (click)="charity = true">
+                        <div class="charity-icon"></div>
+                        <span>Charity</span>
+                    </div>
+                </div>
+            </div>
+            <input *ngIf="charity" type="text" placeholder="Employer Identification Number" [(ngModel)]="ein"  name="ein"/>
+            <button (click)="register()">register</button>
+            <p class="message">Already registered? <span (click)="switchToLogin()">Login</span></p>
+        </form>
+    </div>
+</div>

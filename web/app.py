@@ -15,17 +15,17 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 cors = CORS(app, resources={r"/donate": {"origins": "http://localhost:4200"}, r"/charity": {"origins": "http://localhost:4200"}, r"/charities": {"origins": "http://localhost:4200"}, r"/login": {"origins": "http://localhost:4200"}, r"/register": {"origins": "http://localhost:4200"}})
 
-@app.route('/transaction', methods=['POST'])
+@app.route('/donate', methods=['POST'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
-def transaction():
+def donate():
     donate_info = request.get_json()
 
-    sender = donate_info['sender']
-    recipient = donate_info['recipient']
+    username = donate_info['username']
+    ein = donate_info['ein']
     amount = donate_info['amount']
     description = donate_info['description']
 
-    galileo.make_transaction(sender, recipient, amount, description)
+    galileo.create_transaction(username_to_account_id(username), ein_to_account_id(ein), amount, description)
 
 @app.route('/charity', methods=['POST'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
@@ -34,7 +34,7 @@ def charity():
 
     ein = charity_info['ein']
 
-    js = galileo.get_transactions(ein)
+    js = galileo.get_transactions(ein_to_account_id(ein))
     js['charity_navigator'] = charity_navigator.get_rating(ein)
 
     return Response(json.dumps(js), mimetype='application/json')
@@ -50,7 +50,7 @@ def charities():
     for row in rows:
         charity = {
             'ein': row['ein'],
-			'tag_line': row['tag_line'],
+            'tag_line': row['tag_line'],
             'charity_name': row['charity_name'],
             'rating': row['rating']
         }
@@ -58,7 +58,6 @@ def charities():
         js['charities'].append(charity)
 
     return Response(json.dumps(js), mimetype='application/json')
-
 
 @app.route('/login', methods=['POST'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
@@ -81,15 +80,18 @@ def register():
     username = register_info['username']
     password = register_info['password']
 
+    account_id = galileo.create_account(username)
+
     is_charity = register_info['is_charity']
     if is_charity:
         ein = register_info['ein']
     else:
         ein = 'not_applicable'
 
-    query = 'INSERT INTO user(username, password, is_charity, ein) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
+    query = 'INSERT INTO user(username, password, account_id, is_charity, ein) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
         username,
         password,
+        account_id,
         is_charity,
         ein
     )
@@ -97,6 +99,28 @@ def register():
 
     js = get_user_data(username)
     return Response(json.dumps(js), mimetype='application/json')
+
+def username_to_account_id(username):
+    query = 'SELECT user.account_id FROM user WHERE user.username=\'%s\'' % (
+        username
+    )
+
+    rows = query_db(query)
+    if len(rows) != 1:
+        return None
+
+    return rows[0]['account_id']
+
+def ein_to_account_id(ein):
+    query = 'SELECT user.account_id FROM user WHERE user.ein=\'%s\'' % (
+        ein
+    )
+
+    rows = query_db(query)
+    if len(rows) != 1:
+        return None
+
+    return rows[0]['account_id']
 
 def get_user_data(username):
     query = 'SELECT * FROM user WHERE user.username=\'%s\'' % (

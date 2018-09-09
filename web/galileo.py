@@ -33,9 +33,7 @@ def get_trans_history(account_id):
         trans_map = {'merchant': merchant, 'amount': amount, 'time':time, 'description':description}
         trans_history['transaction' + str(trans_count)] = trans_map
 
-    json_data = json.dumps(trans_history)
-    print(json_data)
-    return json_data
+    return trans_history
 
 def test():
     id1 = create_account('grrrrr')
@@ -54,7 +52,6 @@ def create_transaction(sender, recipient, amount, description):
     data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),
                    'accountNo': sender, 'amount': amount, 'transferToAccountNo': recipient, 'message': description}
     r = requests.post(url + 'createAccountTransfer', data = data, cert='galileo148.pem', headers=headers)
-    print(r.text)
 
 def create_account(name):
     data = {'apiLogin': api_login,'apiTransKey': api_transKey, 'providerId': provider_id,'transactionId': trans_id(),

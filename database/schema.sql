@@ -7,6 +7,7 @@ CREATE TABLE user (
 
 CREATE TABLE charity (
   ein TEXT NOT NULL,
+  tag_line TEXT NOT NULL,
   charity_name TEXT NOT NULL,
-  score REAL NOT NULL
+  rating INTEGER NOT NULL
 );

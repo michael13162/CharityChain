@@ -15,18 +15,17 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 cors = CORS(app, resources={r"/donate": {"origins": "http://localhost:4200"}, r"/charity": {"origins": "http://localhost:4200"}, r"/charities": {"origins": "http://localhost:4200"}, r"/login": {"origins": "http://localhost:4200"}, r"/register": {"origins": "http://localhost:4200"}})
 
-@app.route('/donate', methods=['POST'])
+@app.route('/transaction', methods=['POST'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
-def donate():
+def transaction():
     donate_info = request.get_json()
 
-    username = donate_info['username']
+    sender = donate_info['sender']
+    recipient = donate_info['recipient']
     amount = donate_info['amount']
-    ein = donate_info['ein']
     description = donate_info['description']
 
-    galileo.make_transaction(username, ein, amount, description)
-    blockchain.processTransaction(username, ein, amount)
+    galileo.make_transaction(sender, recipient, amount, description)
 
 @app.route('/charity', methods=['POST'])
 @cross_origin(origin='localhost',headers=['Content-Type'])

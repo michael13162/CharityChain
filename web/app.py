@@ -10,6 +10,7 @@ import sqlite3
 import random
 import blockchain
 import galileo
+import charity_navigator
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -35,9 +36,13 @@ def charity():
 
     ein = charity_info['ein']
 
-    js = galileo.get_transactions(ein_to_account_id(ein))
-    js['charity_navigator'] = charity_navigator.get_rating(ein)
-
+    trans_history = galileo.get_trans_history(ein_to_account_id(ein))
+    charity_info = charity_navigator.get_rating_info(ein)
+    
+    js = {
+        'trans_history': trans_history,
+        'charity_info': charity_info
+    }
     return Response(json.dumps(js), mimetype='application/json')
 
 @app.route('/charities', methods=['GET'])
@@ -82,7 +87,8 @@ def register():
     password = register_info['password']
 
     account_id = galileo.create_account(username)
-
+    print(account_id)
+	
     is_charity = register_info['is_charity']
     if is_charity:
         ein = register_info['ein']
@@ -107,8 +113,6 @@ def username_to_account_id(username):
     )
 
     rows = query_db(query)
-    if len(rows) != 1:
-        return None
 
     return rows[0]['account_id']
 
@@ -118,8 +122,6 @@ def ein_to_account_id(ein):
     )
 
     rows = query_db(query)
-    if len(rows) != 1:
-        return None
 
     return rows[0]['account_id']
 
@@ -129,8 +131,6 @@ def get_user_data(username):
     )
 
     rows = query_db(query)
-    if len(rows) != 1:
-        return None
 
     user = rows[0]
 

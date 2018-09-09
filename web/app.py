@@ -66,8 +66,7 @@ def query_db(query):
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-	DATABASE = '../database/database.db'
-        db = g._database = sqlite3.connect(DATABASE)
+        db = g._database = sqlite3.connect('../database/database.db')
     db.row_factory = sqlite3.Row
     return db
 

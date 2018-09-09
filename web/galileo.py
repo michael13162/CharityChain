@@ -33,8 +33,7 @@ def get_trans_history(account_id):
         trans_map = {'merchant': merchant, 'amount': amount, 'time':time, 'description':description}
         trans_history['transaction' + str(trans_count)] = trans_map
 
-    json_data = json.dumps(trans_history)
-    return json_data
+    return trans_history
 
 def test():
     id1 = create_account('grrrrr')

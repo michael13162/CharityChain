@@ -40,17 +40,20 @@ def charity():
 
     trans_history = galileo.get_trans_history(ein_to_account_id(ein))
     charity_info = charity_navigator.get_rating_info(ein)
+    mission_statement, tag_line = get_charity_statements(ein)
     
     js = {
         'trans_history': trans_history,
-        'charity_info': charity_info
+        'charity_info': charity_info,
+        'mission_statement': mission_statement,
+        'tag_line': tag_line
     }
     return Response(json.dumps(js), mimetype='application/json')
 
 @app.route('/charities', methods=['GET'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def charities():
-    query = 'SELECT * FROM charity ORDER BY rating DESC'
+    query = 'SELECT * FROM charity ORDER BY rating DESC' # TODO project out stuff
 
     rows = query_db(query)
 
@@ -107,6 +110,15 @@ def register():
 
     js = get_user_data(username)
     return Response(json.dumps(js), mimetype='application/json')
+
+def get_charity_statements(ein):
+    query = 'SELECT charity.mission_statement, charity.tag_line FROM charity WHERE charity.ein=\'%s\'' % (
+        ein
+    )
+
+    rows = query_db(query)
+
+    return rows[0]['mission_statement'], rows[0]['tag_line']
 
 def username_to_account_id(username):
     query = 'SELECT user.account_id FROM user WHERE user.username=\'%s\'' % (

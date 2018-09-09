@@ -9,11 +9,10 @@
 </div>
 
 <div *ngIf="signedIn()" class="header">
-    <div *ngIf="isCharity()" class="left-side">
-    </div>
-    <div *ngIf="!isCharity()" class="left-side">
-        <div class="action-div" (click)="switchScreen(AppScreen.Search)">Search for Charities</div>
-        <div class="action-div" (click)="switchScreen(AppScreen.Profile)">My Profile</div>
+    <div class="left-side">
+        <div class="action-div" (click)="switchScreen(AppScreen.Home)">About</div>
+        <div *ngIf="isCharity()" class="action-div" (click)="switchScreen(AppScreen.Profile)">My Profile</div>
+        <div *ngIf="!isCharity()" class="action-div" (click)="switchScreen(AppScreen.Search)">Search for Charities</div>
     </div>
     <div class="right-side">
         <div class="action-div" (click)="signOut()">Sign Out</div>

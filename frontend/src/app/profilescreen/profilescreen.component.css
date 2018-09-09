@@ -9,22 +9,11 @@
     background-color: #F5FAFA;
 }
 
-.donor-profile-well {
-    position: relative;
-    z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
-    margin: 175px auto 100px;
-    padding: 45px;
-    text-align: center;
-    border: 1px solid #6D929B;
-}
-
 .charity-profile-well {
     position: relative;
     z-index: 1;
     background: #FFFFFF;
-    max-width: 360px;
+    max-width: 400px;
     margin: 175px auto 100px;
     padding: 45px;
     text-align: center;

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationService, AppScreen } from '../services/navigationservice';
 import { UserService } from '../services/userservice';
 
@@ -11,7 +11,8 @@ import { UserService } from '../services/userservice';
 export class HeaderComponent {
   AppScreen = AppScreen;
 
-  constructor(private navigationService: NavigationService, private userService: UserService) {
+  constructor(private cdr: ChangeDetectorRef, private navigationService: NavigationService, private userService: UserService) {
+    this.navigationService.setNavigateCallback(() => {this.cdr.markForCheck()});
   }
 
   switchScreen(screen: AppScreen) {

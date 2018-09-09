@@ -15,7 +15,9 @@ export class HttpService {
 
     login(username: string, password: string): Promise<any> {
         const endpoint = this.baseUrl + "login";
-        return this.httpClient.post(endpoint, {username: username, password: password}, this.HTTP_OPTIONS).toPromise();
+        return this.httpClient.post(endpoint, {username: username, password: password}, this.HTTP_OPTIONS).toPromise().then(
+            (value) => {this.userService.signIn(value);}
+        );
     }
 
     register(username: string, password: string, charity: boolean, ein: string): Promise<any> {

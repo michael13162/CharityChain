@@ -1,0 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,600,400);
+
+* {
+    font-family: Raleway;
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    background: #F5FAFA;
+    width: 100%;
+}
+
+.search-div {
+    width: calc(100% - 100px);
+    margin: 50px;
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.search-well {
+    border-radius: 10px;
+    background: #C1DAD6;
+    height: 50px;
+    padding-left: 15px;
+    font-size: 24px;
+    width: 100%;
+    border: 1px solid #6D929B;
+    color: #B7AFA3;
+    outline: none;
+}
+
+::placeholder {
+    color: #B7AFA3;
+}
+
+.search-icon {
+    position: absolute;
+    right: 60px;
+    width: 32px;
+    height: 32px;
+    background: url(../../assets/magnifier-tool.svg);
+    background-size: 32px 32px;
+}
+
+.search-results {
+    width: calc(100% - 100px);
+    margin-left: 50px;
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-headers {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 2px solid #C1DAD6;
+    color: #B7AFA3;
+}
+
+.organization-header {
+    flex: 0 0 150px;
+}
+
+.tagline-header {
+    flex: 1 1 0px;
+}
+
+.rating-header {
+    flex: 0 0 100px;
+}
+
+.more-details-header {
+    flex: 0 0 100px;
+}

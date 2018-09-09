@@ -12,8 +12,8 @@
     <div *ngIf="isCharity()" class="left-side">
     </div>
     <div *ngIf="!isCharity()" class="left-side">
-        <div class="action-div">Search for Charities</div>
-        <div class="action-div">My Profile</div>
+        <div class="action-div" (click)="switchScreen(AppScreen.Search)">Search for Charities</div>
+        <div class="action-div" (click)="switchScreen(AppScreen.Profile)">My Profile</div>
     </div>
     <div class="right-side">
         <div class="action-div" (click)="signOut()">Sign Out</div>

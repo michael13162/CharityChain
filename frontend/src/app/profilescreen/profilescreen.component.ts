@@ -10,6 +10,10 @@ import { UserService } from '../services/userservice';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileScreenComponent {
-    constructor(private navigationService: NavigationService, private httpService: HttpService, private userService: UserService) {
-    }
+  constructor(private navigationService: NavigationService, private httpService: HttpService, private userService: UserService) {
+  }
+
+  public isCharity() {
+    return this.userService.isCharity();
+  }
 }

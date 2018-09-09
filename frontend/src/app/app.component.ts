@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NavigationService, AppScreen } from './services/navigationservice';
 
 @Component({
@@ -10,7 +10,10 @@ import { NavigationService, AppScreen } from './services/navigationservice';
 export class AppComponent {
   AppScreen = AppScreen;
 
-  constructor(private navigationService: NavigationService) {
+  constructor(private cdr: ChangeDetectorRef, private navigationService: NavigationService) {
+    this.navigationService.setNavigateCallback(() => {
+      this.cdr.markForCheck();
+    });
   }
 
   public get currentScreen(): AppScreen {

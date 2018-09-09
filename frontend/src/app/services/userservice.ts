@@ -9,6 +9,8 @@ export class UserService {
     private ein: string;
     private balance: number;
 
+    signInOutCallback: () => void;
+
     constructor() {}
 
     signIn(user: any) {
@@ -20,14 +22,9 @@ export class UserService {
             this.ein = user.ein;
             this.balance = user.balance;
         }
-    }
-
-    isSignedIn(): boolean {
-        return this.signedIn;
-    }
-
-    isCharity(): boolean {
-        return this.charity;
+        if (this.signInOutCallback) {
+            this.signInOutCallback();
+        }
     }
 
     signOut() {
@@ -37,5 +34,20 @@ export class UserService {
         this.charity = undefined;
         this.ein = undefined;
         this.balance = undefined;
+        if (this.signInOutCallback) {
+            this.signInOutCallback();
+        }
+    }
+
+    setSignInOutCallback(callback: () => void) {
+        this.signInOutCallback = callback;
+    }
+
+    isSignedIn(): boolean {
+        return this.signedIn;
+    }
+
+    isCharity(): boolean {
+        return this.charity;
     }
 }

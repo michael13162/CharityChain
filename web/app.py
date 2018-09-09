@@ -21,6 +21,7 @@ cors = CORS(app, resources={r"/donate": {"origins": "http://localhost:4200"}, r"
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def donate():
     donate_info = request.get_json()
+    print(donate_info)
 
     username = donate_info['username']
     ein = donate_info['ein']
@@ -33,6 +34,7 @@ def donate():
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def charity():
     charity_info = request.get_json()
+    print(charity_info)
 
     ein = charity_info['ein']
 
@@ -87,7 +89,6 @@ def register():
     password = register_info['password']
 
     account_id = galileo.create_account(username)
-    print(account_id)
 	
     is_charity = register_info['is_charity']
     if is_charity:
@@ -131,10 +132,7 @@ def get_user_data(username):
     )
 
     rows = query_db(query)
-
     user = rows[0]
-
-    print(user)
 
     js = {
         'username': user['username'],
@@ -145,7 +143,8 @@ def get_user_data(username):
     if user['is_charity'] == 1:
         #js['balance'] = blockchain.getBalance(user['username'])
         js['balance'] = 0
-
+    
+    print(js)
     return js
 
 def insert_db(query):

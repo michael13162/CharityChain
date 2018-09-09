@@ -16,17 +16,16 @@ app = Flask(__name__)
 def info():
     return "It's running!"
 
-@app.route('/donate', methods=['POST'])
-def donate():
+@app.route('/transaction', methods=['POST'])
+def transaction():
     donate_info = request.get_json()
 
-    username = donate_info['username']
+    sender = donate_info['sender']
+    recipient = donate_info['recipient']
     amount = donate_info['amount']
-    ein = donate_info['ein']
     description = donate_info['description']
 
-    galileo.make_transaction(username, ein, amount, description)
-    blockchain.processTransaction(username, ein, amount)
+    galileo.make_transaction(sender, recipient, amount, description)
 
 @app.route('/charity', methods=['POST'])
 def charity():

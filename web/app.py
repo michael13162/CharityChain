@@ -53,7 +53,7 @@ def charity():
 @app.route('/charities', methods=['GET'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def charities():
-    query = 'SELECT * FROM charity ORDER BY rating DESC' # TODO project out stuff
+    query = 'SELECT charity.ein, charity.tag_line, charity.charity_name, charity.rating FROM charity ORDER BY rating DESC LIMIT 1000' # TODO project out stuff?
 
     rows = query_db(query)
 

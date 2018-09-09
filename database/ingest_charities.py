@@ -7,9 +7,10 @@ def query(page_size, page_num):
         'app_id': '36f7e58b',
         'app_key': '5b7e63cbf53729f850317094a8e79575',
         'rated': 'TRUE',
-        'page_size': page_size,
-        'page_num': page_num
+        'pageSize': page_size,
+        'pageNum': page_num
     }
+    print(params)
     r = requests.get(base_url + '/Organizations', params=params)
     if r.status_code != 200:
         print('ERROR')
@@ -42,22 +43,22 @@ while True:
 db = sqlite3.connect('database.db')
 
 for result in results:
-    if 'ein' in result:
+    if 'ein' in result and result['ein'] is not None:
         ein = result['ein']
     else:
         ein = 'NOT FOUND'
 
-    if 'tagLine' in result:
+    if 'tagLine' in result and result['tagLine'] is not None:
         tag_line = result['tagLine']
     else:
         tag_line = 'NOT FOUND'
 
-    if 'charityName' in result:
+    if 'charityName' in result and result['charityName'] is not None:
         charity_name = result['charityName']
     else:
         charity_name = 'NOT FOUND'
 
-    if 'currentRating' in result:
+    if 'currentRating' in result and result['currentRating']['rating'] is not None:
         rating = str(result['currentRating']['rating'])
     else:
         rating = '0'

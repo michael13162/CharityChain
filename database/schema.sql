@@ -1,6 +1,7 @@
 CREATE TABLE user (
   username TEXT NOT NULL,
   password TEXT NOT NULL,
+  account_id TEXT NOT NULL,
   is_charity INTEGER NOT NULL,
   ein TEXT NOT NULL
 );

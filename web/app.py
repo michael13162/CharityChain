@@ -7,6 +7,7 @@ import requests
 from xml.dom.minidom import parseString
 import string
 import random
+import blockchain
 
 app = Flask(__name__)
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python3h
+#!/usr/bin/python3
 
 from flask import Flask
 from flask import request
@@ -7,7 +7,7 @@ import requests
 from xml.dom.minidom import parseString
 import string
 import random
-import blockchain
+#import blockchain
 
 app = Flask(__name__)
 

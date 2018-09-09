@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-from flask import Flask, g
-from flask import request
-from flask import jsonify
+from flask import Flask, g, jsonify, request, Response
+from flask_cors import CORS, cross_origin
 import requests
+import json
 from xml.dom.minidom import parseString
 import string
 import sqlite3
@@ -11,12 +11,12 @@ import random
 import blockchain
 
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/', methods=['GET']) 
-def info():
-    return "It's running!"
+cors = CORS(app, resources={r"/donate": {"origins": "http://localhost:4200"}, r"/charity": {"origins": "http://localhost:4200"}, r"/charities": {"origins": "http://localhost:4200"}, r"/login": {"origins": "http://localhost:4200"}, r"/register": {"origins": "http://localhost:4200"}})
 
 @app.route('/donate', methods=['POST'])
+@cross_origin(origin='localhost',headers=['Content-Type'])
 def donate():
     donate_info = request.get_json()
 
@@ -29,6 +29,7 @@ def donate():
     blockchain.processTransaction(username, ein, amount)
 
 @app.route('/charity', methods=['POST'])
+@cross_origin(origin='localhost',headers=['Content-Type'])
 def charity():
     charity_info = request.get_json()
 
@@ -40,6 +41,7 @@ def charity():
     return Response(json.dumps(js), mimetype='application/json')
 
 @app.route('/charities', methods=['POST'])
+@cross_origin(origin='localhost',headers=['Content-Type'])
 def charities():
     search_string = request.get_json()['search_string']
     query = 'SELECT * FROM charity WHERE charity.charityName LIKE \'%%s%\' ORDER BY charity.score DESC' % (
@@ -62,6 +64,7 @@ def charities():
 
 
 @app.route('/login', methods=['POST'])
+@cross_origin(origin='localhost',headers=['Content-Type'])
 def login():
     login_info = request.get_json()
     print(login_info)
@@ -73,6 +76,7 @@ def login():
     return Response(json.dumps(js), mimetype='application/json')
 
 @app.route('/register', methods=['POST'])
+@cross_origin(origin='localhost',headers=['Content-Type'])
 def register():
     register_info = request.get_json()
     print(register_info)
@@ -86,7 +90,7 @@ def register():
     else:
         ein = 'not_applicable'
 
-    query = 'INSERT INTO users(username, password, is_charity, ein) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
+    query = 'INSERT INTO user(username, password, is_charity, ein) values(\'%s\', \'%s\', \'%s\', \'%s\')' % (
         username,
         password,
         is_charity,
@@ -117,7 +121,8 @@ def get_user_data(username):
         'ein': user['ein'],
     }
     if user['is_charity'] == 1:
-        js['balance'] = blockchain.getBalance(user['username'])
+        #js['balance'] = blockchain.getBalance(user['username'])
+        js['balance'] = 0
 
     return js
 

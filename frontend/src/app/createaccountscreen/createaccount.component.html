@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <input *ngIf="charity" type="text" placeholder="Employer Identification Number" [(ngModel)]="ein"  name="ein"/>
+            <input *ngIf="charity" type="text" placeholder="employer identification number" [(ngModel)]="ein"  name="ein"/>
             <button (click)="register()">register</button>
             <p class="message">Already registered? <span (click)="switchToLogin()">Login</span></p>
         </form>

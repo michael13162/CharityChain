@@ -6,6 +6,10 @@
 
 :host {
     position: fixed;
+    width: 100%;
+}
+
+.header {
     background-color: #6D929B;
     height: 75px;
     width: 100%;

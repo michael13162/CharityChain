@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationService, AppScreen } from '../services/navigationservice';
 import { HttpService } from '../services/httpservice';
+import { UserService } from '../services/userservice';
 
 @Component({
   selector: 'login-screen-component',
@@ -12,7 +13,7 @@ export class LoginScreenComponent {
     username: string;
     password: string;
 
-    constructor(private navigationService: NavigationService, private httpService: HttpService) {
+    constructor(private navigationService: NavigationService, private httpService: HttpService, private userService: UserService) {
     }
     
     switchToCreateAccount() {
@@ -21,7 +22,11 @@ export class LoginScreenComponent {
 
     login() {
         this.httpService.login(this.username, this.password).then(() => {
-            this.navigationService.navigateTo(AppScreen.Search);
+            if (this.userService.isCharity()) {
+                this.navigationService.navigateTo(AppScreen.Profile);
+            } else {
+                this.navigationService.navigateTo(AppScreen.Search);
+            }
         });
     }
 }

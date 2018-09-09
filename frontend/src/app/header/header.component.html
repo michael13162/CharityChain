@@ -1,7 +1,21 @@
-<div class="left-side">
-    <div class="action-div" (click)="switchScreen(AppScreen.Home)">About</div>
+<div *ngIf="!signedIn()" class="header">
+    <div class="left-side">
+        <div class="action-div" (click)="switchScreen(AppScreen.Home)">About</div>
+    </div>
+    <div class="right-side">
+        <div class="action-div" (click)="switchScreen(AppScreen.Login)">Sign in</div>
+        <div class="action-div" (click)="switchScreen(AppScreen.CreateAccount)">Create Account</div>
+    </div>
 </div>
-<div class="right-side">
-    <div class="action-div" (click)="switchScreen(AppScreen.Login)">Sign in</div>
-    <div class="action-div" (click)="switchScreen(AppScreen.CreateAccount)">Create Account</div>
+
+<div *ngIf="signedIn()" class="header">
+    <div *ngIf="isCharity()" class="left-side">
+    </div>
+    <div *ngIf="!isCharity()" class="left-side">
+        <div class="action-div">Search for Charities</div>
+        <div class="action-div">My Profile</div>
+    </div>
+    <div class="right-side">
+        <div class="action-div" (click)="signOut()">Sign Out</div>
+    </div>
 </div>

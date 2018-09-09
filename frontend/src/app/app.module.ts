@@ -1,6 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -10,7 +11,8 @@ import { UserService } from './services/userservice';
 import { HttpService } from './services/httpservice';
 import { LoginScreenComponent } from './loginscreen/loginscreen.component';
 import { CreateAccountComponent } from './createaccountscreen/createaccount.component';
-import { HttpClientModule } from '@angular/common/http';
+import { SearchScreenComponent } from './searchscreen/searchscreen.component';
+import { ProfileScreenComponent } from './profilescreen/profilescreen.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     HomeScreenComponent,
     LoginScreenComponent,
+    ProfileScreenComponent,
+    SearchScreenComponent,
   ],
   imports: [
     BrowserModule,

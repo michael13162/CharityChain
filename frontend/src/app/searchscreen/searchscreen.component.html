@@ -18,8 +18,6 @@
     </div>
 <div>
 
-<div class="overlay" [class.visible]="false">
-    <div class="profile-well">
-
-    </div>
+<div class="overlay" [class.visible]="showingDetails">
+    <profile-well-component [jsonProfile]="jsonProfile" [overlay]="true" (overlayClosed)="showingDetails = false" (donateClicked)="donateClicked()"></profile-well-component>
 </div>

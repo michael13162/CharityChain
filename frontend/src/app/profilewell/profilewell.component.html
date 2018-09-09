@@ -1,6 +1,7 @@
 <div class="profile-well">
     <a href="{{getOrganizationUrl()}}" target="_blank" class="organization-name">{{getOrganizationName()}}</a>
     <img class="rating-image" [src]="getRatingImage()"><img>
+    <div class="mission-statement">{{getMissionStatement()}}</div>
     <span class="performance-header">Performance Metrics</span>
     <div class="performance-metric"><span class="performance-description">Administration Expense Ratio:</span><span class="performance-value">{{getAdministrationExpenseRatio()}}</span></div>
     <div class="performance-metric"><span class="performance-description">Fundraising Efficiency:</span><span class="performance-value">{{getFundraisingEfficiency()}}</span></div>

@@ -25,11 +25,21 @@
     font-size: 24px;
     cursor: pointer;
     color: #B7AFA3;
+    text-decoration: underline;
 }
 
 .rating-image {
+    margin-top: 10px;
     height: 12px;
     width: 60px;
+}
+
+.mission-statement {
+    font-size: 14px;
+    color: #B7AFA3;
+    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .performance-header {

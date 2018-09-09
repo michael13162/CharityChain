@@ -32,6 +32,12 @@ export class ProfileWellComponent {
     }
   }
 
+  getMissionStatement(): string {
+    if (this.jsonProfile) {
+      return this.jsonProfile.mission_statement;
+    }
+  }
+
   getAdministrationExpenseRatio(): string {
     if (this.jsonProfile) {
       return this.jsonProfile.charity_info.financialRating.performanceMetrics.administrationExpensesRatio;

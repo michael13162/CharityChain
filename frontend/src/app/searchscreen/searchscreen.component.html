@@ -5,9 +5,15 @@
 
 <div class="search-results">
     <div class="search-headers">
-        <div class="organization-header">Organization</div>
-        <div class="tagline-header">Tagline</div>
-        <div class="rating-header">Rating</div>
-        <div class="more-details-header">More Details</div>
+        <div class="organization">Organization</div>
+        <div class="tagline">Tagline</div>
+        <div class="rating">Rating</div>
+        <div class="more-details">More Details</div>
+    </div>
+    <div class="search-result" *ngFor="let charity of charities">
+        <div class="organization">charity.charity_name</div>
+        <div class="tagline">charity.tag_line</div>
+        <div class="rating">charity.rating</div>
+        <div class="more-details">More Details</div>
     </div>
 <div>

@@ -39,13 +39,10 @@ def charity():
 
     return Response(json.dumps(js), mimetype='application/json')
 
-@app.route('/charities', methods=['POST'])
+@app.route('/charities', methods=['GET'])
 @cross_origin(origin='localhost',headers=['Content-Type'])
 def charities():
-    search_string = request.get_json()['search_string']
-    query = 'SELECT * FROM charity WHERE charity.charityName LIKE \'%%s%\' ORDER BY charity.score DESC' % (
-        search_string
-    )
+    query = 'SELECT * FROM charity ORDER BY rating DESC'
 
     rows = query_db(query)
 
@@ -53,8 +50,9 @@ def charities():
     for row in rows:
         charity = {
             'ein': row['ein'],
+			'tag_line': row['tag_line'],
             'charity_name': row['charity_name'],
-            'score': row['score']
+            'rating': row['rating']
         }
 
         js['charities'].append(charity)

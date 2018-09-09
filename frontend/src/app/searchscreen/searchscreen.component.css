@@ -61,18 +61,22 @@
     color: #B7AFA3;
 }
 
-.organization-header {
+.organization {
     flex: 0 0 150px;
 }
 
-.tagline-header {
+.tagline {
     flex: 1 1 0px;
 }
 
-.rating-header {
+.rating {
     flex: 0 0 100px;
 }
 
-.more-details-header {
+.more-details {
     flex: 0 0 100px;
+}
+
+.search-result {
+    border-bottom: 1px solid #C1DAD6;
 }

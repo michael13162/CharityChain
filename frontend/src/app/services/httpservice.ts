@@ -26,4 +26,9 @@ export class HttpService {
             (value) => {this.userService.signIn(value);}
         );
     }
+
+    getCharities(): Promise<any> {
+        const endpoint = this.baseUrl + "charities";
+        return this.httpClient.get(endpoint, this.HTTP_OPTIONS).toPromise();
+    }
 }
